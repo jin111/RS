@@ -34,6 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.btn_applyclick1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txb_inputazimuth
@@ -45,11 +46,11 @@
             // 
             // btn_inputclick
             // 
-            this.btn_inputclick.Location = new System.Drawing.Point(97, 184);
+            this.btn_inputclick.Location = new System.Drawing.Point(249, 184);
             this.btn_inputclick.Name = "btn_inputclick";
             this.btn_inputclick.Size = new System.Drawing.Size(75, 23);
             this.btn_inputclick.TabIndex = 1;
-            this.btn_inputclick.Text = "确定";
+            this.btn_inputclick.Text = "Finish";
             this.btn_inputclick.UseVisualStyleBackColor = true;
             this.btn_inputclick.Click += new System.EventHandler(this.btn_inputclick_Click);
             // 
@@ -83,15 +84,26 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(17, 13);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.Size = new System.Drawing.Size(35, 12);
             this.label3.TabIndex = 5;
-            this.label3.Text = "请输入参数";
+            this.label3.Text = "Input";
+            // 
+            // btn_applyclick1
+            // 
+            this.btn_applyclick1.Location = new System.Drawing.Point(168, 184);
+            this.btn_applyclick1.Name = "btn_applyclick1";
+            this.btn_applyclick1.Size = new System.Drawing.Size(75, 23);
+            this.btn_applyclick1.TabIndex = 6;
+            this.btn_applyclick1.Text = "Apply";
+            this.btn_applyclick1.UseVisualStyleBackColor = true;
+            this.btn_applyclick1.Click += new System.EventHandler(this.btn_applyclick1_Click);
             // 
             // hillshadeFunction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(188, 252);
+            this.ClientSize = new System.Drawing.Size(336, 252);
+            this.Controls.Add(this.btn_applyclick1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -113,5 +125,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btn_applyclick1;
     }
 }

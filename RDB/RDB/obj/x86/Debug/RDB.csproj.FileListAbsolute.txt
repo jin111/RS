@@ -75,3 +75,6 @@ D:\RS\RDB\RDB\obj\x86\Debug\RDB.stretchFunction.resources
 D:\RDB\RDB\RDB\bin\Debug\RDB.exe.config
 D:\RDB\RDB\RDB\obj\x86\Debug\RDB.exe
 D:\RDB\RDB\RDB\obj\x86\Debug\RDB.pdb
+C:\Users\Administrator\Documents\GitHub\RS\RDB\RDB\bin\Debug\RDB.exe.config
+C:\Users\Administrator\Documents\GitHub\RS\RDB\RDB\obj\x86\Debug\RDB.exe
+C:\Users\Administrator\Documents\GitHub\RS\RDB\RDB\obj\x86\Debug\RDB.pdb

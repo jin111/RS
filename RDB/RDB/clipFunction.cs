@@ -31,62 +31,53 @@ namespace RDB
         
         private IRaster m_raster;
         private XmlNode m_xmlnode;
-        private string m_input_shppath="D:";
+        private string m_input_shppath;
+        private bool isFinished = false;
 
        
         public clipFunction()
         {
-            InitializeComponent();
-            XmlDocument Doc = new XmlDocument();
-            XmlDeclaration dec = Doc.CreateXmlDeclaration("1.0", "UTF-8", null);
-            Doc.AppendChild(dec);
-
-            XmlElement xmlnode1= Doc.CreateElement("Function");
-           
-            Doc.AppendChild(xmlnode1);
-            xmlnode1.SetAttribute("name", "clipFunction");
-            xmlnode1.SetAttribute("description", "A raster clip function.");
-       
-           xmlnode1.AppendChild(Doc.CreateElement("inputSHPPath",m_input_shppath));
-            
-
-            //新建m_xmlnode
-            m_xmlnode = xmlnode1;
-
+            InitializeComponent(); 
         }
 
-        //接收栅格函数链中传递过来的参数
+        //具有参数XmlNode的构造函数
         public clipFunction(XmlNode xmlnode)
         {
             InitializeComponent();
+            //接收传入的XmlNode
             this.m_xmlnode = xmlnode;
-            //遍历子节点寻找并修改成新输入的参数
+            //遍历子节点寻找名字为"inputSHPPath"的节点，并在textbox中显示该参数值
             foreach (XmlNode xnl1 in m_xmlnode.ChildNodes)
             {
+                //跳过
                 if (xnl1 is XmlComment)
                     continue;
+               //找到该节点
                 XmlElement xe = (XmlElement)xnl1;
                 if (xe.Name == "inputSHPPath")
-                {
-                    txb_inputfeatherlayer.Text = xe.InnerText;
+                { 
+                    //在textbox中显示该参数值
+                    txb_inputfeatherlayer.Text = xnl1.InnerText;
                 }
+               
             }
 
         }
-
+        //具有参数IRaster和XmlNode的构造函数
         public clipFunction(IRaster raster, XmlNode xmlnode)
         {
             InitializeComponent();
+            //接收传入的IRaster和XmlNode
             this.m_raster = raster;
             this.m_xmlnode = xmlnode;
   
         }
-
+        //主窗体调用该函数得到XmlNode
         public XmlNode GetXMLNode()
         {
             return this.m_xmlnode;
         }
-
+        //主窗体调用该函数得到IRaster
         public IRaster GetRaster()
         {
             return this.m_raster;
@@ -99,27 +90,32 @@ namespace RDB
             //遍历子节点寻找并修改成新输入的参数
             foreach (XmlNode xnl1 in  m_xmlnode.ChildNodes)
                 {
+                    //跳过
                     if (xnl1 is XmlComment)
                         continue;
-            XmlElement xe = (XmlElement)xnl1;
-            if (xe.Name  == "inputSHPPath")
+
+                    XmlElement xe = (XmlElement)xnl1;
+                    if (xe.Name  == "inputSHPPath")
                     {
+                        //修改节点属性
                         xe.InnerText = txb_inputfeatherlayer.Text;
                     }
                  }
-          this.Close();
+            //判断用户已经做出完成修改操作，将该布尔值置真
+            isFinished = true;
+          
         }
 
+
+        //clip操作的执行函数
         public void Init()
         {
-        //遍历子节点读取参数
-            
+            //遍历子节点，找到该对应子节点，读取相应路径参数
+            //该路径是作为Clip Features的文件路径
             foreach (XmlNode xnl1 in m_xmlnode.ChildNodes)
             {
                 if (xnl1 is XmlComment)
                     continue;
-
-
                 XmlElement xe = (XmlElement)xnl1;
                 if (xe.Name == "inputSHPPath")
                 {
@@ -178,7 +174,7 @@ namespace RDB
             }
         
         }
-
+        //为textbox的点击设置响应函数，点击该框弹出选择文件对话框以输入Cilp Features
         private void txb_inputfeatherlayer_MouseDown(object sender, MouseEventArgs e)
         {
             try
@@ -186,7 +182,7 @@ namespace RDB
                 //打开文件选择对话框，设置对话框属性
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "Shp file (*.shp)|*.shp";
-                openFileDialog.Title="选择矢量文件";
+                openFileDialog.Title="Choose Clip Features File";
                 openFileDialog.Multiselect=false;
                 string fileName="";
                 //如果对话框已成功选择文件，将文件路径信息填写到输入框里
@@ -202,6 +198,12 @@ namespace RDB
                 MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         
+        }
+
+        //点击Apply按钮，窗口关闭
+        private void btn_applyclick_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
       

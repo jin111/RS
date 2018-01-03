@@ -31,25 +31,10 @@ namespace RDB
         private XmlNode m_xmlnode;
         private double  m_azimuth=50;
         private double m_zfactor=1/11111.0;
-       
+        private bool isFinished = false; 
         public hillshadeFunction()
         {
             InitializeComponent();
-            XmlDocument Doc = new XmlDocument();
-            XmlDeclaration dec = Doc.CreateXmlDeclaration("1.0", "UTF-8", null);
-            Doc.AppendChild(dec);
-
-            XmlElement xmlnode1 = Doc.CreateElement("Function");
-            Doc.AppendChild(xmlnode1);
-            xmlnode1.SetAttribute("name", "hillshadeFunction");
-            xmlnode1.SetAttribute("description", "A raster hillshade function.");
-
-            xmlnode1.AppendChild(Doc.CreateElement("Azimuth", m_azimuth.ToString()));
-            xmlnode1.AppendChild(Doc.CreateElement("ZFactor", m_zfactor.ToString()));
-
-            //新建m_xmlnode
-            m_xmlnode = xmlnode1;
-           
         }
      
         //接收栅格函数链中传递过来的参数
@@ -86,12 +71,12 @@ namespace RDB
             this.m_xmlnode = xmlnode;
   
         }
-
+        //主窗体调用该函数得到XmlNode
         public XmlNode GetXMLNode()
         {
             return this.m_xmlnode;
         }
-
+        //主窗体调用该函数得到IRaster
         public IRaster GetRaster()
         {
             return this.m_raster;
@@ -112,35 +97,37 @@ namespace RDB
                         continue;
 
                 XmlElement xe = (XmlElement)xnl1;
+                //找到Azimuth节点，修改其参数
                     if (xe.Name == "Azimuth")
                     {
                         xe.InnerText = m_azimuth.ToString();
                     }
+                    //找到ZFactor节点，修改其参数
                     if (xe.Name == "ZFactor")
                     {
                         xe.InnerText = m_zfactor.ToString();
                     }
                     }
 
-
-            this.Close();
+            isFinished = true;
         }
 
         //执行山体阴影操作
         public void Init()
         {
-        //遍历子节点读取参数
-            
+            //遍历子节点读取参数 
             foreach (XmlNode xnl1 in m_xmlnode.ChildNodes)
             {
                 if (xnl1 is XmlComment)
                     continue;
 
                 XmlElement xe = (XmlElement)xnl1;
+                //找到Azimuth节点，读取其参数
                 if (xe.Name == "Azimuth")
                 {
                    m_azimuth= double.Parse(xe.InnerText);
                 }
+                //找到ZFactor节点，读取其参数
                 if (xe.Name == "ZFactor")
                 {
                     m_zfactor = double.Parse(xe.InnerText);
@@ -149,25 +136,27 @@ namespace RDB
             //山体阴影的实现
             try
             {
-
+                //将m_raster转为IRaster接口实行栅格相关操作
                 IRaster2 raster2 = m_raster as IRaster2;
+                //使用IHillshadeFunctionArguments接口进行山体阴影操作
                 IHillshadeFunctionArguments hillshadeFunctionArugments = (IHillshadeFunctionArguments)new HillshadeFunctionArguments();
+                //设置生成山体阴影所需要的参数Azimuth和ZFactor的值
                 hillshadeFunctionArugments.Azimuth = m_azimuth;
                 hillshadeFunctionArugments.ZFactor = m_zfactor;
+                //设置数据源为该raster
                 hillshadeFunctionArugments.DEM = raster2;
-
+                //创建一个IRasterFunction
                 IRasterFunction rasterFunction = new HillshadeFunction();
+                //创建IFunctionRasterDataset以调用Init方法执行函数
                 IFunctionRasterDataset functionRasterDataset = new FunctionRasterDataset();
+                //设置IFunctionRasterDataset的相关参数
                 IFunctionRasterDatasetName functionRasterDatasetName = (IFunctionRasterDatasetName)new FunctionRasterDatasetNameClass();
-                //随机生成文件名
-                //Random ran = new Random();
-                //int rannum = ran.Next(1000);
                 functionRasterDatasetName.FullName = @"D:\RDB";
                 functionRasterDataset.FullName = (IName)functionRasterDatasetName;
+                //调用Init执行
                 functionRasterDataset.Init(rasterFunction, hillshadeFunctionArugments);
-
+                //所得结果转为IRasterDataset
                 IRasterDataset rasData = functionRasterDataset as IRasterDataset;
-          
                 //修改m_raster
                 m_raster = rasData.CreateDefaultRaster();
 
@@ -177,6 +166,11 @@ namespace RDB
                 MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         
+        }
+        //点击Apply按钮，窗口关闭
+        private void btn_applyclick1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
 

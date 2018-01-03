@@ -31,40 +31,52 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txb_inputfeatherlayer = new System.Windows.Forms.TextBox();
             this.btn_inputclick2 = new System.Windows.Forms.Button();
+            this.btn_applyclick = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 25);
+            this.label1.Location = new System.Drawing.Point(32, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(149, 12);
+            this.label1.Size = new System.Drawing.Size(119, 12);
             this.label1.TabIndex = 1;
-            this.label1.Text = "选择裁剪所依据的矢量图层";
+            this.label1.Text = "Input Clip Features";
             // 
             // txb_inputfeatherlayer
             // 
-            this.txb_inputfeatherlayer.Location = new System.Drawing.Point(25, 55);
+            this.txb_inputfeatherlayer.Location = new System.Drawing.Point(25, 35);
             this.txb_inputfeatherlayer.Name = "txb_inputfeatherlayer";
-            this.txb_inputfeatherlayer.Size = new System.Drawing.Size(100, 21);
+            this.txb_inputfeatherlayer.Size = new System.Drawing.Size(223, 21);
             this.txb_inputfeatherlayer.TabIndex = 2;
             this.txb_inputfeatherlayer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txb_inputfeatherlayer_MouseDown);
             // 
             // btn_inputclick2
             // 
-            this.btn_inputclick2.Location = new System.Drawing.Point(163, 53);
+            this.btn_inputclick2.Location = new System.Drawing.Point(173, 62);
             this.btn_inputclick2.Name = "btn_inputclick2";
             this.btn_inputclick2.Size = new System.Drawing.Size(75, 23);
             this.btn_inputclick2.TabIndex = 3;
-            this.btn_inputclick2.Text = "确认";
+            this.btn_inputclick2.Text = "Finish";
             this.btn_inputclick2.UseVisualStyleBackColor = true;
             this.btn_inputclick2.Click += new System.EventHandler(this.btn_inputclick2_Click);
+            // 
+            // btn_applyclick
+            // 
+            this.btn_applyclick.Location = new System.Drawing.Point(92, 62);
+            this.btn_applyclick.Name = "btn_applyclick";
+            this.btn_applyclick.Size = new System.Drawing.Size(75, 23);
+            this.btn_applyclick.TabIndex = 4;
+            this.btn_applyclick.Text = "Apply";
+            this.btn_applyclick.UseVisualStyleBackColor = true;
+            this.btn_applyclick.Click += new System.EventHandler(this.btn_applyclick_Click);
             // 
             // clipFunction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(260, 97);
+            this.Controls.Add(this.btn_applyclick);
             this.Controls.Add(this.btn_inputclick2);
             this.Controls.Add(this.txb_inputfeatherlayer);
             this.Controls.Add(this.label1);
@@ -80,5 +92,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txb_inputfeatherlayer;
         private System.Windows.Forms.Button btn_inputclick2;
+        private System.Windows.Forms.Button btn_applyclick;
     }
 }
